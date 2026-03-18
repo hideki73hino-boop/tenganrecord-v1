@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="点眼記録">
+  <meta name="description" content="さすたびに、記録。目薬の習慣をやさしくサポート。">
+  <meta name="theme-color" content="#2563eb">
+
+  <!-- Canonical / OGP base URL -->
+  <link rel="canonical" href="https://tenganrecord-d62ca9lkeio2zjioe.netlify.app/">
+
+  <!-- Open Graph -->
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="点眼記録">
+  <meta property="og:title" content="点眼記録">
+  <meta property="og:description" content="さすたびに、記録。目薬の習慣をやさしくサポート。">
+  <meta property="og:url" content="https://tenganrecord-d62ca9lkeio2zjioe.netlify.app/">
+  <meta property="og:image" content="https://tenganrecord-d62ca9lkeio2zjioe.netlify.app/ogp_eyedrop_recorder.jpg">
+  <meta property="og:image:secure_url" content="https://tenganrecord-d62ca9lkeio2zjioe.netlify.app/ogp_eyedrop_recorder.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="点眼記録アプリのOGP画像">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="点眼記録">
+  <meta name="twitter:description" content="さすたびに、記録。目薬の習慣をやさしくサポート。">
+  <meta name="twitter:image" content="https://tenganrecord-d62ca9lkeio2zjioe.netlify.app/ogp_eyedrop_recorder.jpg">
+  <meta name="twitter:image:alt" content="点眼記録アプリのOGP画像">
+  <title>点眼記録</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --primary-dark: #1d4ed8;
+      --success: #16a34a;
+      --success-light: #f0fdf4;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+
+    /* Header */
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .header-sub {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    /* Main container */
+    .container {
+      padding: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      padding-bottom: 40px;
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    /* Today status */
+    .today-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .today-status.done {
+      background: var(--success-light);
+      border: 1.5px solid #bbf7d0;
+    }
+    .today-status.not-done {
+      background: var(--gray-100);
+      border: 1.5px solid var(--gray-200);
+    }
+    .status-icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+    .status-text-main {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .status-text-sub {
+      font-size: 12px;
+      color: var(--gray-600);
+      margin-top: 2px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      letter-spacing: 0.02em;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+    .btn-primary:active { background: var(--primary-dark); }
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    .btn-gray {
+      background: var(--gray-100);
+      color: var(--gray-800);
+    }
+    .btn-sm {
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 8px;
+      width: auto;
+    }
+
+    /* Voice button */
+    .voice-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 28px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+      flex-shrink: 0;
+    }
+    .voice-btn.listening {
+      background: var(--danger);
+      color: white;
+      animation: pulse 1.2s infinite;
+      box-shadow: 0 0 0 0 rgba(220,38,38,0.4);
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(220,38,38,0); }
+      100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); }
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .action-row .btn { flex: 1; }
+
+    /* Rate display */
+    .rate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .rate-item {
+      background: var(--gray-50);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      border: 1px solid var(--gray-200);
+    }
+    .rate-label {
+      font-size: 12px;
+      color: var(--gray-600);
+      margin-bottom: 6px;
+    }
+    .rate-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .rate-detail {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 4px;
+    }
+    .rate-value.high { color: var(--success); }
+    .rate-value.mid { color: #d97706; }
+    .rate-value.low { color: var(--danger); }
+
+    /* Voice log */
+    .voice-log {
+      font-size: 13px;
+      color: var(--gray-600);
+      padding: 10px 12px;
+      background: var(--gray-50);
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .voice-log.active { color: var(--primary); background: var(--primary-light); border-color: #bfdbfe; }
+    .voice-log.success { color: var(--success); background: var(--success-light); border-color: #bbf7d0; }
+    .voice-log.error { color: var(--danger); background: var(--danger-light); border-color: #fecaca; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--gray-800);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 999;
+      max-width: 90vw;
+      text-align: center;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+
+    /* Chart */
+    #chartContainer {
+      display: none;
+      position: relative;
+      height: 220px;
+      margin-top: 4px;
+    }
+    #chartContainer.visible { display: block; }
+
+    /* History list */
+    .history-list {
+      list-style: none;
+    }
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .history-item:last-child { border-bottom: none; }
+    .history-date { font-size: 14px; font-weight: 500; }
+    .history-badge {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      background: var(--success-light);
+      color: var(--success);
+    }
+    .empty-msg {
+      text-align: center;
+      color: var(--gray-400);
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    /* Collapsible */
+    .collapsible-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .collapsible-btn .arrow {
+      font-size: 12px;
+      color: var(--gray-400);
+      transition: transform 0.2s;
+    }
+    .collapsible-btn.open .arrow { transform: rotate(180deg); }
+    .collapsible-content { display: none; margin-top: 12px; }
+    .collapsible-content.open { display: block; }
+
+    /* Danger zone */
+    .danger-zone {
+      border: 1.5px solid #fecaca;
+      background: var(--danger-light);
+    }
+
+    .section-gap { margin-top: 6px; }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-row .btn { flex: 1; min-width: 120px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>💧 点眼記録</h1>
+  <div class="header-sub" id="headerDate"></div>
+</div>
+
+<div class="container">
+
+  <!-- Today's Status -->
+  <div class="card">
+    <div class="card-title">今日の記録</div>
+    <div id="todayStatus" class="today-status not-done">
+      <div class="status-icon" id="statusIcon">💊</div>
+      <div>
+        <div class="status-text-main" id="statusText">まだ記録されていません</div>
+        <div class="status-text-sub" id="statusSub"></div>
+      </div>
+    </div>
+
+    <!-- Record Button + Voice Button -->
+    <div class="action-row" style="margin-bottom:10px;">
+      <button class="btn btn-primary" id="recordBtn" onclick="recordToday()">
+        💧 点眼を記録する
+      </button>
+      <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="音声入力">
+        🎤
+      </button>
+    </div>
+
+    <!-- Voice Log -->
+    <div class="voice-log" id="voiceLog">
+      <span>🎤</span><span id="voiceLogText">マイクボタンで音声コマンド入力</span>
+    </div>
+  </div>
+
+  <!-- Rate Card -->
+  <div class="card">
+    <div class="card-title">点眼率</div>
+    <div class="rate-grid">
+      <div class="rate-item">
+        <div class="rate-label" id="prevMonthLabel">先月</div>
+        <div class="rate-value" id="prevMonthRate">--%</div>
+        <div class="rate-detail" id="prevMonthDetail"></div>
+      </div>
+      <div class="rate-item">
+        <div class="rate-label" id="thisMonthLabel">今月</div>
+        <div class="rate-value" id="thisMonthRate">--%</div>
+        <div class="rate-detail" id="thisMonthDetail"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graph Card -->
+  <div class="card">
+    <button class="collapsible-btn" id="graphToggle" onclick="toggleGraph()">
+      <span class="card-title" style="margin-bottom:0;">📈 直近6ヶ月グラフ</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-content" id="graphContent">
+      <div id="chartContainer" class="visible">
+        <canvas id="rateChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Card -->
+  <div class="card">
+    <button class="collapsible-btn" id="historyToggle" onclick="toggleHistory()">
+      <span class="card-title" style="margin-bottom:0;">📅 今月の記録一覧</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="collapsible-content" id="historyContent">
+      <ul class="history-list" id="historyList"></ul>
+    </div>
+  </div>
+
+  <!-- Export & Danger -->
+  <div class="card">
+    <div class="card-title">データ管理</div>
+    <div class="btn-row" style="margin-bottom:8px;">
+      <button class="btn btn-outline btn-sm" onclick="exportCSV()">📥 エクスポート</button>
+      <button class="btn btn-outline btn-sm" onclick="triggerImport()" style="color: var(--success); border-color: var(--success);">📤 インポート</button>
+    </div>
+    <input type="file" id="importFileInput" accept=".csv,text/csv" style="display:none;" onchange="handleImportFile(event)">
+    <div class="btn-row">
+      <button class="btn btn-gray btn-sm" onclick="confirmDeleteToday()">🗑 今日を削除</button>
+      <button class="btn btn-gray btn-sm" onclick="confirmDeleteAll()" style="color: var(--danger);">⚠️ 全削除</button>
+    </div>
+  </div>
+
+  <!-- Voice Commands Help -->
+  <div class="card" style="background: var(--primary-light); border: 1px solid #bfdbfe;">
+    <div class="card-title" style="color: var(--primary);">🎤 音声コマンド一覧</div>
+    <div style="font-size: 13px; color: var(--gray-600); line-height: 1.9;">
+      「<b>点眼した</b>」「<b>点眼</b>」→ 今日を記録<br>
+      「<b>グラフ</b>」「<b>チャート</b>」→ グラフを表示<br>
+      「<b>削除</b>」→ 今日の記録を削除<br>
+      「<b>エクスポート</b>」「<b>ダウンロード</b>」→ CSV出力
+    </div>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="card">
+    <div class="card-title">お問い合わせ</div>
+    <div style="border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; background: white;">
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSewhC8OuR_ml2pGB1-pnvBUGmbrA68ibPgudY-QO07b37MarQ/viewform?embedded=true"
+        width="100%"
+        height="900"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        loading="lazy"
+        style="display:block; width:100%; border:0;"
+        title="お問い合わせフォーム"
+      >読み込んでいます…</iframe>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Confirm Modal -->
+<div id="confirmOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center;">
+  <div style="background:white; border-radius:16px; padding:24px; margin:20px; max-width:320px; width:100%;">
+    <div style="font-size:16px; font-weight:700; margin-bottom:8px;" id="confirmTitle"></div>
+    <div style="font-size:14px; color:var(--gray-600); margin-bottom:20px;" id="confirmMsg"></div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-gray btn-sm" style="flex:1;" onclick="closeConfirm()">キャンセル</button>
+      <button class="btn btn-danger btn-sm" style="flex:1;" id="confirmOkBtn">実行する</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── Storage ───────────────────────────────────────────────
+  const STORAGE_KEY = 'tengan_v1';
+
+  function getRecords() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+  }
+
+  function saveRecords(r) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(r));
+  }
+
+  function toDateStr(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function formatDateJP(str) {
+    const [y, m, d] = str.split('-');
+    return `${y}年${parseInt(m)}月${parseInt(d)}日`;
+  }
+
+  // ─── Core Actions ──────────────────────────────────────────
+  function recordToday() {
+    const records = getRecords();
+    const today = toDateStr(new Date());
+    if (records[today]) {
+      showToast('今日はすでに記録済みです ✅');
+      return;
+    }
+    records[today] = true;
+    saveRecords(records);
+    renderAll();
+    showToast('点眼を記録しました 💧', 'success');
+  }
+
+  function deleteTodayRecord() {
+    const records = getRecords();
+    const today = toDateStr(new Date());
+    if (!records[today]) {
+      showToast('今日の記録はありません');
+      return;
+    }
+    delete records[today];
+    saveRecords(records);
+    renderAll();
+    showToast('今日の記録を削除しました', 'error');
+  }
+
+  function deleteAllRecords() {
+    saveRecords({});
+    renderAll();
+    showToast('全記録を削除しました');
+  }
+
+  // ─── Confirm Dialog ────────────────────────────────────────
+  let confirmCallback = null;
+
+  function showConfirm(title, msg, cb, okLabel = '実行する', okStyle = 'btn-danger') {
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMsg').textContent = msg;
+    confirmCallback = cb;
+    const okBtn = document.getElementById('confirmOkBtn');
+    okBtn.textContent = okLabel;
+    okBtn.className = `btn ${okStyle} btn-sm`;
+    okBtn.style.flex = '1';
+    document.getElementById('confirmOverlay').style.display = 'flex';
+  }
+
+  function closeConfirm() {
+    document.getElementById('confirmOverlay').style.display = 'none';
+    confirmCallback = null;
+  }
+
+  document.getElementById('confirmOkBtn').onclick = function() {
+    closeConfirm();
+    if (confirmCallback) confirmCallback();
+  };
+
+  function confirmDeleteToday() {
+    const today = toDateStr(new Date());
+    const records = getRecords();
+    if (!records[today]) { showToast('今日の記録はありません'); return; }
+    showConfirm('今日の記録を削除', '今日の点眼記録を削除しますか？', deleteTodayRecord, '削除する', 'btn-danger');
+  }
+
+  function confirmDeleteAll() {
+    const records = getRecords();
+    const count = Object.keys(records).length;
+    if (count === 0) { showToast('記録がありません'); return; }
+    showConfirm('全記録を削除', `${count}件の記録を全て削除します。この操作は取り消せません。`, deleteAllRecords, '削除する', 'btn-danger');
+  }
+
+  // ─── Rates ─────────────────────────────────────────────────
+  function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+
+  function calcMonthRate(year, month, upToDay) {
+    const records = getRecords();
+    const total = upToDay || getDaysInMonth(year, month);
+    let count = 0;
+    for (let d = 1; d <= total; d++) {
+      const str = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      if (records[str]) count++;
+    }
+    return { count, total, rate: total > 0 ? Math.round(count / total * 100) : 0 };
+  }
+
+  function rateClass(r) {
+    if (r >= 80) return 'high';
+    if (r >= 50) return 'mid';
+    return 'low';
+  }
+
+  // ─── Render ─────────────────────────────────────────────────
+  function renderAll() {
+    const now = new Date();
+    const today = toDateStr(now);
+    const records = getRecords();
+
+    // Header date
+    document.getElementById('headerDate').textContent =
+      `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${['日','月','火','水','木','金','土'][now.getDay()]}）`;
+
+    // Today status
+    const done = !!records[today];
+    const statusEl = document.getElementById('todayStatus');
+    statusEl.className = `today-status ${done ? 'done' : 'not-done'}`;
+    document.getElementById('statusIcon').textContent = done ? '✅' : '💊';
+    document.getElementById('statusText').textContent = done ? '点眼済み' : 'まだ記録されていません';
+    document.getElementById('statusSub').textContent = done ? `記録日時: ${today}` : '「点眼を記録する」か音声で記録してください';
+
+    // Rates
+    const y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
+    const prev = calcMonthRate(m === 0 ? y - 1 : y, m === 0 ? 11 : m - 1, null);
+    const curr = calcMonthRate(y, m, d);
+
+    const prevMonthName = `${m === 0 ? y - 1 : y}年${m === 0 ? 12 : m}月`;
+    const currMonthName = `${y}年${m + 1}月`;
+
+    document.getElementById('prevMonthLabel').textContent = prevMonthName;
+    document.getElementById('thisMonthLabel').textContent = currMonthName;
+
+    const prevEl = document.getElementById('prevMonthRate');
+    prevEl.textContent = `${prev.rate}%`;
+    prevEl.className = `rate-value ${rateClass(prev.rate)}`;
+    document.getElementById('prevMonthDetail').textContent = `${prev.count}日 / ${prev.total}日`;
+
+    const currEl = document.getElementById('thisMonthRate');
+    currEl.textContent = `${curr.rate}%`;
+    currEl.className = `rate-value ${rateClass(curr.rate)}`;
+    document.getElementById('thisMonthDetail').textContent = `${curr.count}日 / ${curr.total}日（今日まで）`;
+
+    // History (this month)
+    renderHistory(y, m, d);
+
+    // Chart (if visible)
+    if (document.getElementById('graphContent').classList.contains('open')) {
+      renderChart();
+    }
+  }
+
+  function renderHistory(y, m, upToDay) {
+    const records = getRecords();
+    const list = document.getElementById('historyList');
+    list.innerHTML = '';
+    const days = [];
+    for (let d = upToDay; d >= 1; d--) {
+      const str = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      if (records[str]) days.push(str);
+    }
+    if (days.length === 0) {
+      list.innerHTML = '<li class="empty-msg">今月の記録はありません</li>';
+      return;
+    }
+    days.forEach(dateStr => {
+      const li = document.createElement('li');
+      li.className = 'history-item';
+      li.innerHTML = `
+        <span class="history-date">${formatDateJP(dateStr)}</span>
+        <span class="history-badge">✅ 点眼済</span>
+      `;
+      list.appendChild(li);
+    });
+  }
+
+  // ─── Chart ─────────────────────────────────────────────────
+  let chartInstance = null;
+
+  function renderChart() {
+    const now = new Date();
+    const labels = [];
+    const data = [];
+
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const y = d.getFullYear(), m = d.getMonth();
+      const isCurrentMonth = (y === now.getFullYear() && m === now.getMonth());
+      const upTo = isCurrentMonth ? now.getDate() : null;
+      const { rate } = calcMonthRate(y, m, upTo);
+      labels.push(`${m + 1}月`);
+      data.push(rate);
+    }
+
+    const ctx = document.getElementById('rateChart').getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: '点眼率 (%)',
+          data,
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37,99,235,0.08)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#2563eb',
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          tension: 0.3,
+          fill: true,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            min: 0, max: 100,
+            ticks: {
+              callback: v => `${v}%`,
+              font: { size: 11 }
+            },
+            grid: { color: '#f3f4f6' }
+          },
+          x: { ticks: { font: { size: 12 } }, grid: { display: false } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: { label: ctx => ` ${ctx.raw}%` }
+          }
+        }
+      }
+    });
+  }
+
+  function toggleGraph() {
+    const content = document.getElementById('graphContent');
+    const btn = document.getElementById('graphToggle');
+    const isOpen = content.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if (isOpen) renderChart();
+  }
+
+  function toggleHistory() {
+    const content = document.getElementById('historyContent');
+    const btn = document.getElementById('historyToggle');
+    const isOpen = content.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+  }
+
+  // ─── Export CSV ────────────────────────────────────────────
+  function exportCSV() {
+    const records = getRecords();
+    const dates = Object.keys(records).sort();
+    if (dates.length === 0) { showToast('エクスポートするデータがありません'); return; }
+
+    let csv = '\uFEFF日付,点眼\n'; // BOM for Excel
+    dates.forEach(d => { csv += `${d},1\n`; });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tengan_records_${toDateStr(new Date())}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 300);
+    showToast('CSVをエクスポートしました 📥', 'success');
+  }
+
+  // ─── Import CSV ───────────────────────────────────────────
+  function triggerImport() {
+    // iOSでは user gesture の中でクリックする必要がある
+    document.getElementById('importFileInput').value = '';
+    document.getElementById('importFileInput').click();
+  }
+
+  function handleImportFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => parseAndConfirmImport(ev.target.result);
+    reader.onerror = () => showToast('ファイルの読み込みに失敗しました', 'error');
+    reader.readAsText(file, 'utf-8');
+  }
+
+  function parseAndConfirmImport(text) {
+    // BOM除去
+    const content = text.replace(/^\uFEFF/, '');
+    const lines = content.split(/\r?\n/).filter(l => l.trim() !== '');
+    if (lines.length < 2) { showToast('データが見つかりません', 'error'); return; }
+
+    // ヘッダー行で列インデックスを特定
+    const header = lines[0].split(',').map(h => h.trim());
+    const dateCol = header.findIndex(h => h === '日付');
+    if (dateCol === -1) { showToast('「日付」列が見つかりません', 'error'); return; }
+
+    const existing = getRecords();
+    const toAdd = [];
+    const skippedExist = [];
+    const skippedInvalid = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const cols = lines[i].split(',');
+      const dateStr = (cols[dateCol] || '').trim();
+
+      // YYYY-MM-DD 形式チェック
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+        skippedInvalid.push(dateStr || `行${i + 1}`);
+        continue;
+      }
+      // 有効な日付かチェック
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) {
+        skippedInvalid.push(dateStr);
+        continue;
+      }
+      if (existing[dateStr]) {
+        skippedExist.push(dateStr);
+      } else {
+        toAdd.push(dateStr);
+      }
+    }
+
+    if (toAdd.length === 0 && skippedExist.length === 0) {
+      showToast('有効なデータが見つかりません', 'error');
+      return;
+    }
+
+    let msg = `${toAdd.length}件を新規インポートします。`;
+    if (skippedExist.length > 0) msg += `\n既存の${skippedExist.length}件はスキップされます。`;
+    if (skippedInvalid.length > 0) msg += `\n無効な行${skippedInvalid.length}件は無視されます。`;
+
+    if (toAdd.length === 0) {
+      showToast(`全${skippedExist.length}件はすでに記録済みです`);
+      return;
+    }
+
+    showConfirm('CSVインポート', msg, () => {
+      const records = getRecords();
+      toAdd.forEach(d => { records[d] = true; });
+      saveRecords(records);
+      renderAll();
+      showToast(`${toAdd.length}件をインポートしました 📤`, 'success');
+    }, `${toAdd.length}件をインポート`, 'btn-primary');
+  }
+
+  // ─── Toast ────────────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg, type = '') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = `toast ${type}`;
+    clearTimeout(toastTimer);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => { el.classList.add('show'); });
+    });
+    toastTimer = setTimeout(() => { el.classList.remove('show'); }, 2500);
+  }
+
+  // ─── Voice Input ──────────────────────────────────────────
+  let recognition = null;
+  let isListening = false;
+
+  function setupVoice() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      document.getElementById('voiceLogText').textContent = '音声認識はこのブラウザでは未対応です';
+      document.getElementById('voiceBtn').disabled = true;
+      return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = 'ja-JP';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    recognition.onstart = () => {
+      isListening = true;
+      setVoiceUI('listening', '🎤 聞いています…');
+    };
+
+    recognition.onresult = (e) => {
+      const transcript = Array.from(e.results)
+        .map(r => r[0].transcript)
+        .join('');
+      setVoiceUI('active', `"${transcript}"`);
+
+      if (e.results[e.results.length - 1].isFinal) {
+        handleVoiceCommand(transcript);
+      }
+    };
+
+    recognition.onerror = (e) => {
+      isListening = false;
+      setVoiceBtn(false);
+      if (e.error === 'no-speech') {
+        setVoiceUI('', '音声が検出されませんでした');
+      } else if (e.error === 'not-allowed') {
+        setVoiceUI('error', 'マイクへのアクセスが拒否されました');
+      } else {
+        setVoiceUI('error', `エラー: ${e.error}`);
+      }
+    };
+
+    recognition.onend = () => {
+      isListening = false;
+      setVoiceBtn(false);
+      setTimeout(() => {
+        if (document.getElementById('voiceLog').className.includes('active')) {
+          setVoiceUI('', 'マイクボタンで音声コマンド入力');
+        }
+      }, 2000);
+    };
+  }
+
+  function toggleVoice() {
+    if (!recognition) { showToast('音声認識が利用できません'); return; }
+    if (isListening) {
+      recognition.stop();
+    } else {
+      try { recognition.start(); }
+      catch (err) { setVoiceUI('error', 'マイクを開始できませんでした'); }
+    }
+  }
+
+  function setVoiceBtn(listening) {
+    const btn = document.getElementById('voiceBtn');
+    btn.className = `voice-btn${listening ? ' listening' : ''}`;
+    btn.textContent = listening ? '⏹' : '🎤';
+  }
+
+  function setVoiceUI(type, text) {
+    const log = document.getElementById('voiceLog');
+    log.className = `voice-log${type ? ' ' + type : ''}`;
+    document.getElementById('voiceLogText').textContent = text;
+    setVoiceBtn(type === 'listening' || type === 'active');
+  }
+
+  function handleVoiceCommand(text) {
+    const t = text.trim();
+    if (/点眼/.test(t)) {
+      setVoiceUI('success', `「${t}」→ 点眼を記録します`);
+      recordToday();
+    } else if (/グラフ|チャート|ぐらふ/.test(t)) {
+      setVoiceUI('success', `「${t}」→ グラフを表示します`);
+      const content = document.getElementById('graphContent');
+      if (!content.classList.contains('open')) toggleGraph();
+      document.getElementById('graphContent').scrollIntoView({ behavior: 'smooth' });
+    } else if (/削除|さくじょ/.test(t)) {
+      setVoiceUI('success', `「${t}」→ 今日の記録を削除します`);
+      confirmDeleteToday();
+    } else if (/エクスポート|ダウンロード|えくすぽーと/.test(t)) {
+      setVoiceUI('success', `「${t}」→ CSVをエクスポートします`);
+      exportCSV();
+    } else {
+      setVoiceUI('error', `「${t}」→ コマンドが認識できませんでした`);
+    }
+  }
+
+  // ─── Init ─────────────────────────────────────────────────
+  setupVoice();
+  renderAll();
+
+  // Refresh on visibility change (e.g., coming back from background)
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) renderAll();
+  });
+</script>
+</body>
+</html>

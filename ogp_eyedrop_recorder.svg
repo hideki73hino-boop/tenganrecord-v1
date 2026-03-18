@@ -1,0 +1,105 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF0F8"/>
+      <stop offset="50%" stop-color="#EFF4FF"/>
+      <stop offset="100%" stop-color="#F0FBF4"/>
+    </linearGradient>
+    <linearGradient id="bottleGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B8D8F8"/>
+      <stop offset="100%" stop-color="#7BB8F0"/>
+    </linearGradient>
+    <linearGradient id="capGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9ECEF7"/>
+      <stop offset="100%" stop-color="#6AABEE"/>
+    </linearGradient>
+    <linearGradient id="dropGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8D8F8"/>
+      <stop offset="100%" stop-color="#5EA8E8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Soft decorative circles -->
+  <circle cx="100" cy="100" r="160" fill="#FFE4F4" opacity="0.5" style="fill:rgb(255, 228, 244);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="1120" cy="540" r="200" fill="#E0F0FF" opacity="0.5" style="fill:rgb(224, 240, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="1050" cy="80" r="120" fill="#E8F8F0" opacity="0.5" style="fill:rgb(232, 248, 240);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="180" cy="560" r="100" fill="#FFF0E0" opacity="0.45" style="fill:rgb(255, 240, 224);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.45;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Small dot pattern -->
+  <circle cx="400" cy="60" r="5" fill="#F4C0D8" opacity="0.6" style="fill:rgb(244, 192, 216);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="460" cy="80" r="4" fill="#B8D8F8" opacity="0.6" style="fill:rgb(184, 216, 248);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="780" cy="40" r="6" fill="#C8ECD8" opacity="0.6" style="fill:rgb(200, 236, 216);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="840" cy="70" r="4" fill="#FFD8C0" opacity="0.6" style="fill:rgb(255, 216, 192);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="320" cy="560" r="5" fill="#D8C8F8" opacity="0.5" style="fill:rgb(216, 200, 248);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="900" cy="580" r="6" fill="#F8D8D8" opacity="0.5" style="fill:rgb(248, 216, 216);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Eye drop bottle (stylized) -->
+  <!-- Body -->
+  <rect x="780" y="180" width="110" height="260" rx="20" fill="url(#bottleGrad)" opacity="0.85" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.85;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Highlight -->
+  <rect x="796" y="198" width="28" height="80" rx="8" fill="white" opacity="0.35" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.35;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Cap -->
+  <rect x="796" y="130" width="78" height="60" rx="14" fill="url(#capGrad)" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Nozzle -->
+  <rect x="820" y="100" width="30" height="36" rx="8" fill="#8FC8F0" style="fill:rgb(143, 200, 240);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <rect x="830" y="86" width="10" height="20" rx="4" fill="#7ABCEE" style="fill:rgb(122, 188, 238);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Drop -->
+  <ellipse cx="835" cy="72" rx="9" ry="12" fill="url(#dropGrad)" opacity="0.9" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.9;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <ellipse cx="835" cy="68" rx="3" ry="5" fill="white" opacity="0.5" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Drop ripple rings -->
+  <ellipse cx="835" cy="78" rx="16" ry="7" fill="none" stroke="#88C4F0" stroke-width="1.5" opacity="0.5" style="fill:none;stroke:rgb(136, 196, 240);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <ellipse cx="835" cy="78" rx="24" ry="11" fill="none" stroke="#88C4F0" stroke-width="1" opacity="0.3" style="fill:none;stroke:rgb(136, 196, 240);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Bottle label text area -->
+  <rect x="790" y="250" width="90" height="60" rx="8" fill="white" opacity="0.45" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.45;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text font-family="Georgia, serif" font-size="11" font-weight="500" fill="#5890C8" text-anchor="middle" x="835" y="272" style="fill:rgb(88, 144, 200);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:11px;font-weight:500;text-anchor:middle;dominant-baseline:auto">目薬</text>
+  <text font-family="Georgia, serif" font-size="9" fill="#7AAAD8" text-anchor="middle" x="835" y="290" style="fill:rgb(122, 170, 216);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">eye drops</text>
+
+  <!-- Decorative leaf / cross shapes -->
+  <path d="M720 200 Q740 170 760 200 Q740 230 720 200Z" fill="#A8DEC0" opacity="0.55" style="fill:rgb(168, 222, 192);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.55;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <path d="M700 240 Q730 220 720 200 Q690 220 700 240Z" fill="#C8EDD8" opacity="0.45" style="fill:rgb(200, 237, 216);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.45;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="730" cy="216" r="5" fill="white" opacity="0.6" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Checkmark / record icon (soft green) -->
+  <circle cx="680" cy="360" r="34" fill="#D4F0E0" style="fill:rgb(212, 240, 224);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <path d="M664 360 L675 374 L698 348" fill="none" stroke="#5DB87A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="fill:none;stroke:rgb(93, 184, 122);color:rgb(0, 0, 0);stroke-width:4px;stroke-linecap:round;stroke-linejoin:round;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Clock icon -->
+  <circle cx="760" cy="400" r="22" fill="#FFE8D4" style="fill:rgb(255, 232, 212);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <circle cx="760" cy="400" r="18" fill="none" stroke="#F0A870" stroke-width="2" style="fill:none;stroke:rgb(240, 168, 112);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <line x1="760" y1="390" x2="760" y2="402" stroke="#F0A870" stroke-width="2.5" stroke-linecap="round" style="fill:rgb(0, 0, 0);stroke:rgb(240, 168, 112);color:rgb(0, 0, 0);stroke-width:2.5px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <line x1="760" y1="402" x2="768" y2="406" stroke="#F0A870" stroke-width="2.5" stroke-linecap="round" style="fill:rgb(0, 0, 0);stroke:rgb(240, 168, 112);color:rgb(0, 0, 0);stroke-width:2.5px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Main title -->
+  <text font-family="'Hiragino Sans', 'Yu Gothic', sans-serif" font-size="74" font-weight="700" fill="#3A6898" x="96" y="280" letter-spacing="-1" style="fill:rgb(58, 104, 152);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Hiragino Sans&quot;, &quot;Yu Gothic&quot;, sans-serif;font-size:74px;font-weight:700;text-anchor:start;dominant-baseline:auto">点眼記録</text>
+
+  <!-- Subtitle -->
+  <text font-family="'Hiragino Sans', 'Yu Gothic', sans-serif" font-size="74" font-weight="700" fill="#3A8055" x="96" y="370" letter-spacing="-1" style="fill:rgb(58, 128, 85);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Hiragino Sans&quot;, &quot;Yu Gothic&quot;, sans-serif;font-size:74px;font-weight:700;text-anchor:start;dominant-baseline:auto">アプリ</text>
+
+  <!-- Catch phrase -->
+  <text font-family="'Hiragino Sans', 'Yu Gothic', sans-serif" font-size="28" font-weight="400" fill="#7A9EC0" x="100" y="432" letter-spacing="1" style="fill:rgb(122, 158, 192);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Hiragino Sans&quot;, &quot;Yu Gothic&quot;, sans-serif;font-size:28px;font-weight:400;text-anchor:start;dominant-baseline:auto">さすたびに、記録。目薬の習慣をやさしくサポート。</text>
+
+  <!-- Divider line -->
+  <rect x="100" y="456" width="620" height="3" rx="2" fill="#C8DFF8" opacity="0.7" style="fill:rgb(200, 223, 248);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.7;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Feature pills -->
+  <rect x="100" y="478" width="148" height="38" rx="19" fill="#E8F4FF" style="fill:rgb(232, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text font-family="'Hiragino Sans', 'Yu Gothic', sans-serif" font-size="16" fill="#5890D0" text-anchor="middle" x="174" y="502" style="fill:rgb(88, 144, 208);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Hiragino Sans&quot;, &quot;Yu Gothic&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:middle;dominant-baseline:auto">📅 時刻記録</text>
+
+  <rect x="264" y="478" width="148" height="38" rx="19" fill="#E8F8EE" style="fill:rgb(232, 248, 238);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text font-family="'Hiragino Sans', 'Yu Gothic', sans-serif" font-size="16" fill="#4A9A64" text-anchor="middle" x="338" y="502" style="fill:rgb(74, 154, 100);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Hiragino Sans&quot;, &quot;Yu Gothic&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:middle;dominant-baseline:auto">✅ 飲み忘れ防止</text>
+
+  <rect x="428" y="478" width="148" height="38" rx="19" fill="#FFF4E8" style="fill:rgb(255, 244, 232);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text font-family="'Hiragino Sans', 'Yu Gothic', sans-serif" font-size="16" fill="#D0884A" text-anchor="middle" x="502" y="502" style="fill:rgb(208, 136, 74);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Hiragino Sans&quot;, &quot;Yu Gothic&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:middle;dominant-baseline:auto">📊 履歴グラフ</text>
+
+  <!-- Bottom domain / branding -->
+  <text font-family="'Hiragino Sans', 'Yu Gothic', sans-serif" font-size="20" fill="#A0BAD0" x="100" y="590" style="fill:rgb(160, 186, 208);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Hiragino Sans&quot;, &quot;Yu Gothic&quot;, sans-serif;font-size:20px;font-weight:400;text-anchor:start;dominant-baseline:auto">eyedrop-log.app</text>
+
+  <!-- OGP size indicator (for reference) -->
+  <rect x="0" y="0" width="1200" height="630" fill="none" stroke="#D0D8E8" stroke-width="2" opacity="0.3" style="fill:none;stroke:rgb(208, 216, 232);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+</svg>
