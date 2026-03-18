@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="点眼記録">
   <meta name="description" content="さすたびに、記録。目薬の習慣をやさしくサポート。">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#1e40af">
 
   <!-- Canonical / OGP base URL -->
   <link rel="canonical" href="https://tenganrecord-d62ca9lkeio2zjioe.netlify.app/">
@@ -32,15 +32,18 @@
   <meta name="twitter:description" content="さすたびに、記録。目薬の習慣をやさしくサポート。">
   <meta name="twitter:image" content="https://tenganrecord-d62ca9lkeio2zjioe.netlify.app/ogp_eyedrop_recorder.jpg">
   <meta name="twitter:image:alt" content="点眼記録アプリのOGP画像">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@700&display=swap" rel="stylesheet">
   <title>点眼記録</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --primary: #2563eb;
-      --primary-light: #eff6ff;
-      --primary-dark: #1d4ed8;
+      --primary: #1e40af; /* darker blue */
+      --primary-light: #dbeafe;
+      --primary-dark: #1e3a8a;
       --success: #16a34a;
       --success-light: #f0fdf4;
       --danger: #dc2626;
@@ -56,7 +59,8 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      font-family: 'BIZ UDPGothic', 'BIZ UDPゴシック', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      font-weight: 700;
       background: var(--gray-50);
       color: var(--gray-800);
       min-height: 100vh;
@@ -71,7 +75,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+      box-shadow: 0 2px 8px rgba(30,64,175,0.35);
     }
     .header h1 {
       font-size: 20px;
@@ -89,7 +93,59 @@
       padding: 16px;
       max-width: 480px;
       margin: 0 auto;
-      padding-bottom: 40px;
+      padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+    }
+
+    /* Tabs */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .tabbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: calc(64px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--gray-200);
+      display: flex;
+      z-index: 150;
+    }
+    .tab-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      padding: 8px 6px;
+      -webkit-tap-highlight-color: transparent;
+      color: var(--gray-600);
+      font-weight: 900;
+    }
+    .tab-btn .tab-icon { font-size: 18px; line-height: 1; }
+    .tab-btn .tab-label { font-size: 11px; line-height: 1.1; }
+    .tab-btn.active { color: var(--primary); }
+    .tab-btn.active .tab-icon { transform: translateY(-0.5px); }
+
+    /* Responsive */
+    @media (min-width: 640px) {
+      .container { max-width: 560px; }
+    }
+    @media (min-width: 900px) {
+      .container { max-width: 920px; }
+      /* Tab 1 & 3: show two cards side-by-side on wide screens */
+      #tab1.active, #tab3.active {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+      #tab1.active .card, #tab3.active .card { margin-bottom: 0; }
+      /* Tab 2: keep single column but allow larger chart */
+      #tab2.active #chartContainer { height: 280px; }
     }
 
     /* Cards */
@@ -127,8 +183,17 @@
       border: 1.5px solid var(--gray-200);
     }
     .status-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
       font-size: 28px;
       line-height: 1;
+    }
+    .status-icon svg {
+      width: 32px;
+      height: 32px;
+      display: block;
     }
     .status-text-main {
       font-size: 16px;
@@ -161,7 +226,7 @@
     .btn-primary {
       background: var(--primary);
       color: white;
-      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+      box-shadow: 0 4px 12px rgba(30,64,175,0.35);
     }
     .btn-primary:active { background: var(--primary-dark); }
     .btn-danger {
@@ -199,7 +264,7 @@
       justify-content: center;
       transition: all 0.15s ease;
       -webkit-tap-highlight-color: transparent;
-      box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+      box-shadow: 0 2px 8px rgba(30,64,175,0.2);
       flex-shrink: 0;
     }
     .voice-btn.listening {
@@ -306,6 +371,127 @@
     .history-list {
       list-style: none;
     }
+    .calendar-wrap {
+      margin-top: 6px;
+    }
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .calendar-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--gray-800);
+      letter-spacing: 0.02em;
+    }
+    .calendar-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .cal-btn {
+      border: 1px solid var(--gray-200);
+      background: white;
+      color: var(--gray-800);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cal-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    #calRate {
+      margin-bottom: 10px;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      user-select: none;
+      /* keep height consistent (DOW + 5 weeks minimum) */
+      min-height: 284px;
+    }
+    .dow {
+      font-size: 11px;
+      color: var(--gray-400);
+      text-align: center;
+      padding: 4px 0;
+      font-weight: 700;
+    }
+    .day {
+      position: relative;
+      border: 1px solid var(--gray-200);
+      background: white;
+      border-radius: 12px;
+      height: 46px;
+      display: block;
+      padding: 6px 6px 6px 6px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--gray-800);
+    }
+    .day.out {
+      opacity: 0.35;
+      background: var(--gray-50);
+    }
+    .day.disabled {
+      opacity: 0.45;
+      background: var(--gray-50);
+    }
+    .day.missed {
+      border: 2px solid #b91c1c;
+      background: #fef2f2;
+    }
+    .day.missed .day-num {
+      color: #7f1d1d;
+    }
+    .day.today {
+      outline: 2px solid rgba(30,64,175,0.25);
+      outline-offset: 1px;
+    }
+    .day-num {
+      position: absolute;
+      left: 8px;
+      top: 7px;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--gray-800);
+    }
+    .missed-label {
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      font-size: 11px;
+      font-weight: 900;
+      text-align: center;
+      color: #b91c1c;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* Graph nav */
+    .chart-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .chart-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--gray-800);
+      letter-spacing: 0.02em;
+    }
     .history-item {
       display: flex;
       align-items: center;
@@ -322,6 +508,11 @@
       font-weight: 600;
       background: var(--success-light);
       color: var(--success);
+    }
+    .history-badge.not-done {
+      background: var(--gray-100);
+      color: var(--gray-600);
+      border: 1px solid var(--gray-200);
     }
     .empty-msg {
       text-align: center;
@@ -350,6 +541,9 @@
     .collapsible-btn.open .arrow { transform: rotate(180deg); }
     .collapsible-content { display: none; margin-top: 12px; }
     .collapsible-content.open { display: block; }
+    #insightsContent { margin-top: 6px; }
+    #insightsContent .chart-nav { margin-bottom: 2px; }
+    #insightsContent .calendar-wrap { margin-top: 0; }
 
     /* Danger zone */
     .danger-zone {
@@ -376,11 +570,30 @@
 
 <div class="container">
 
+  <div class="tab-panel active" id="tab1" role="tabpanel" aria-label="今日">
+
+  <!-- Rate Card -->
+  <div class="card">
+    <div class="card-title">点眼率</div>
+    <div class="rate-grid">
+      <div class="rate-item">
+        <div class="rate-label" id="prevMonthLabel">先月</div>
+        <div class="rate-value" id="prevMonthRate">--%</div>
+        <div class="rate-detail" id="prevMonthDetail"></div>
+      </div>
+      <div class="rate-item">
+        <div class="rate-label" id="thisMonthLabel">今月</div>
+        <div class="rate-value" id="thisMonthRate">--%</div>
+        <div class="rate-detail" id="thisMonthDetail"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Today's Status -->
   <div class="card">
     <div class="card-title">今日の記録</div>
     <div id="todayStatus" class="today-status not-done">
-      <div class="status-icon" id="statusIcon">💊</div>
+      <div class="status-icon" id="statusIcon" aria-label="ステータスアイコン"></div>
       <div>
         <div class="status-text-main" id="statusText">まだ記録されていません</div>
         <div class="status-text-sub" id="statusSub"></div>
@@ -403,46 +616,38 @@
     </div>
   </div>
 
-  <!-- Rate Card -->
-  <div class="card">
-    <div class="card-title">点眼率</div>
-    <div class="rate-grid">
-      <div class="rate-item">
-        <div class="rate-label" id="prevMonthLabel">先月</div>
-        <div class="rate-value" id="prevMonthRate">--%</div>
-        <div class="rate-detail" id="prevMonthDetail"></div>
-      </div>
-      <div class="rate-item">
-        <div class="rate-label" id="thisMonthLabel">今月</div>
-        <div class="rate-value" id="thisMonthRate">--%</div>
-        <div class="rate-detail" id="thisMonthDetail"></div>
-      </div>
-    </div>
   </div>
 
-  <!-- Graph Card -->
+  <div class="tab-panel" id="tab2" role="tabpanel" aria-label="未点眼カレンダー＆グラフ">
+
+  <!-- Insights (Synced Graph + Calendar) -->
   <div class="card">
-    <button class="collapsible-btn" id="graphToggle" onclick="toggleGraph()">
-      <span class="card-title" style="margin-bottom:0;">📈 直近6ヶ月グラフ</span>
-      <span class="arrow">▼</span>
-    </button>
-    <div class="collapsible-content" id="graphContent">
+    <div class="card-title">📅 未点眼カレンダー＆グラフ</div>
+    <div id="insightsContent">
+      <div class="chart-nav">
+        <div></div>
+        <div class="calendar-nav">
+          <button class="cal-btn" id="viewPrev" type="button" onclick="viewMove(-1)">‹</button>
+          <button class="cal-btn" id="viewNext" type="button" onclick="viewMove(1)">›</button>
+        </div>
+      </div>
+      <div class="calendar-wrap" id="missedCalendar">
+        <div class="calendar-header" style="margin-bottom:2px;">
+          <div class="calendar-title" id="calTitle">—</div>
+        </div>
+        <div class="rate-detail" id="calRate"></div>
+        <div class="calendar-grid" id="calGrid"></div>
+      </div>
+      <div class="chart-title" id="viewTitle" style="margin-top:14px; margin-bottom:10px;">—</div>
       <div id="chartContainer" class="visible">
         <canvas id="rateChart"></canvas>
       </div>
     </div>
   </div>
 
-  <!-- History Card -->
-  <div class="card">
-    <button class="collapsible-btn" id="historyToggle" onclick="toggleHistory()">
-      <span class="card-title" style="margin-bottom:0;">📅 今月の記録一覧</span>
-      <span class="arrow">▼</span>
-    </button>
-    <div class="collapsible-content" id="historyContent">
-      <ul class="history-list" id="historyList"></ul>
-    </div>
   </div>
+
+  <div class="tab-panel" id="tab3" role="tabpanel" aria-label="管理">
 
   <!-- Export & Danger -->
   <div class="card">
@@ -469,25 +674,24 @@
     </div>
   </div>
 
-  <!-- Contact Form -->
-  <div class="card">
-    <div class="card-title">お問い合わせ</div>
-    <div style="border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; background: white;">
-      <iframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLSewhC8OuR_ml2pGB1-pnvBUGmbrA68ibPgudY-QO07b37MarQ/viewform?embedded=true"
-        width="100%"
-        height="900"
-        frameborder="0"
-        marginheight="0"
-        marginwidth="0"
-        loading="lazy"
-        style="display:block; width:100%; border:0;"
-        title="お問い合わせフォーム"
-      >読み込んでいます…</iframe>
-    </div>
   </div>
 
 </div>
+
+<nav class="tabbar" role="tablist" aria-label="画面切り替え">
+  <button class="tab-btn active" id="tabBtn1" type="button" role="tab" aria-selected="true" aria-controls="tab1" onclick="switchTab('tab1')">
+    <span class="tab-icon">🗓</span>
+    <span class="tab-label">今日</span>
+  </button>
+  <button class="tab-btn" id="tabBtn2" type="button" role="tab" aria-selected="false" aria-controls="tab2" onclick="switchTab('tab2')">
+    <span class="tab-icon">📅</span>
+    <span class="tab-label">カレンダー</span>
+  </button>
+  <button class="tab-btn" id="tabBtn3" type="button" role="tab" aria-selected="false" aria-controls="tab3" onclick="switchTab('tab3')">
+    <span class="tab-icon">⚙️</span>
+    <span class="tab-label">管理</span>
+  </button>
+</nav>
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
@@ -558,6 +762,13 @@
 
   function deleteAllRecords() {
     saveRecords({});
+    // reset derived state (start date / view navigation / chart)
+    viewMonthOffset = 0;
+    if (chartInstance) {
+      chartInstance.data.labels = [];
+      chartInstance.data.datasets[0].data = [];
+      chartInstance.update('none');
+    }
     renderAll();
     showToast('全記録を削除しました');
   }
@@ -582,8 +793,9 @@
   }
 
   document.getElementById('confirmOkBtn').onclick = function() {
+    const cb = confirmCallback;
     closeConfirm();
-    if (confirmCallback) confirmCallback();
+    if (cb) cb();
   };
 
   function confirmDeleteToday() {
@@ -605,11 +817,39 @@
     return new Date(year, month + 1, 0).getDate();
   }
 
-  function calcMonthRate(year, month, upToDay) {
+  function getStartDateStr(records) {
+    const keys = Object.keys(records);
+    if (keys.length === 0) return null;
+    keys.sort(); // YYYY-MM-DD なので辞書順=日付順
+    return keys[0];
+  }
+
+  function calcMonthRate(year, month, upToDay, startDateStr) {
     const records = getRecords();
-    const total = upToDay || getDaysInMonth(year, month);
+    const monthEnd = getDaysInMonth(year, month);
+
+    // 開始日前の月は対象外
+    if (startDateStr) {
+      const [sy, sm, sd] = startDateStr.split('-').map(n => parseInt(n, 10));
+      const startYear = sy;
+      const startMonth = sm - 1;
+      if (year < startYear || (year === startYear && month < startMonth)) {
+        return { count: 0, total: 0, rate: 0 };
+      }
+    }
+
+    const isStartMonth = !!startDateStr && (() => {
+      const [sy, sm] = startDateStr.split('-').map(n => parseInt(n, 10));
+      return year === sy && month === (sm - 1);
+    })();
+
+    const monthStartDay = isStartMonth ? parseInt(startDateStr.split('-')[2], 10) : 1;
+    const safeUpTo = upToDay ? Math.min(upToDay, monthEnd) : null;
+    const rangeEndDay = safeUpTo ?? monthEnd; // 当月は「今日まで」、それ以外は「末日まで」
+    const total = Math.max(0, rangeEndDay - monthStartDay + 1);
+
     let count = 0;
-    for (let d = 1; d <= total; d++) {
+    for (let d = monthStartDay; d <= rangeEndDay; d++) {
       const str = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
       if (records[str]) count++;
     }
@@ -622,11 +862,33 @@
     return 'low';
   }
 
+  function statusIconHtml(done) {
+    if (done) return '✅';
+    // eyedrop bottle (simple inline SVG)
+    return `
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#dbeafe"/>
+            <stop offset="100%" stop-color="#93c5fd"/>
+          </linearGradient>
+        </defs>
+        <rect x="26" y="6" width="12" height="14" rx="4" fill="#1e3a8a" opacity="0.9"/>
+        <rect x="20" y="18" width="24" height="10" rx="5" fill="#1e40af"/>
+        <rect x="22" y="26" width="20" height="30" rx="8" fill="url(#b)" stroke="#1e3a8a" stroke-opacity="0.35" stroke-width="1.5"/>
+        <rect x="28" y="32" width="8" height="18" rx="4" fill="#ffffff" opacity="0.75"/>
+        <path d="M32 2c2 0 4 2 4 4s-2 6-4 6-4-4-4-6 2-4 4-4z" fill="#60a5fa" opacity="0.85"/>
+      </svg>
+    `.trim();
+  }
+
   // ─── Render ─────────────────────────────────────────────────
   function renderAll() {
     const now = new Date();
     const today = toDateStr(now);
     const records = getRecords();
+    const startDateStr = getStartDateStr(records);
+    if (!startDateStr) viewMonthOffset = 0;
 
     // Header date
     document.getElementById('headerDate').textContent =
@@ -636,14 +898,14 @@
     const done = !!records[today];
     const statusEl = document.getElementById('todayStatus');
     statusEl.className = `today-status ${done ? 'done' : 'not-done'}`;
-    document.getElementById('statusIcon').textContent = done ? '✅' : '💊';
+    document.getElementById('statusIcon').innerHTML = statusIconHtml(done);
     document.getElementById('statusText').textContent = done ? '点眼済み' : 'まだ記録されていません';
     document.getElementById('statusSub').textContent = done ? `記録日時: ${today}` : '「点眼を記録する」か音声で記録してください';
 
     // Rates
     const y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
-    const prev = calcMonthRate(m === 0 ? y - 1 : y, m === 0 ? 11 : m - 1, null);
-    const curr = calcMonthRate(y, m, d);
+    const prev = calcMonthRate(m === 0 ? y - 1 : y, m === 0 ? 11 : m - 1, null, startDateStr);
+    const curr = calcMonthRate(y, m, d, startDateStr);
 
     const prevMonthName = `${m === 0 ? y - 1 : y}年${m === 0 ? 12 : m}月`;
     const currMonthName = `${y}年${m + 1}月`;
@@ -652,68 +914,187 @@
     document.getElementById('thisMonthLabel').textContent = currMonthName;
 
     const prevEl = document.getElementById('prevMonthRate');
-    prevEl.textContent = `${prev.rate}%`;
-    prevEl.className = `rate-value ${rateClass(prev.rate)}`;
-    document.getElementById('prevMonthDetail').textContent = `${prev.count}日 / ${prev.total}日`;
+    prevEl.textContent = prev.total > 0 ? `${prev.rate}%` : '--%';
+    prevEl.className = `rate-value ${prev.total > 0 ? rateClass(prev.rate) : ''}`;
+    document.getElementById('prevMonthDetail').textContent = prev.total > 0 ? `${prev.count}日 / ${prev.total}日` : '—';
 
     const currEl = document.getElementById('thisMonthRate');
-    currEl.textContent = `${curr.rate}%`;
-    currEl.className = `rate-value ${rateClass(curr.rate)}`;
-    document.getElementById('thisMonthDetail').textContent = `${curr.count}日 / ${curr.total}日（今日まで）`;
+    currEl.textContent = curr.total > 0 ? `${curr.rate}%` : '--%';
+    currEl.className = `rate-value ${curr.total > 0 ? rateClass(curr.rate) : ''}`;
+    const isStartMonth = !!startDateStr && startDateStr.startsWith(`${y}-${String(m + 1).padStart(2, '0')}-`);
+    document.getElementById('thisMonthDetail').textContent =
+      curr.total === 0 ? '—' : (isStartMonth ? `${curr.count}日 / ${curr.total}日（開始日から今日まで）` : `${curr.count}日 / ${curr.total}日（今日まで）`);
 
-    // History (this month)
-    renderHistory(y, m, d);
-
-    // Chart (if visible)
-    if (document.getElementById('graphContent').classList.contains('open')) {
-      renderChart();
+    // Insights (update immediately after any action)
+    if (document.getElementById('calGrid')) {
+      setupViewIfNeeded(startDateStr);
+      renderSyncedViews(startDateStr);
     }
   }
 
-  function renderHistory(y, m, upToDay) {
+  // ─── Synced month navigation (graph + calendar) ─────────────
+  let viewMonthOffset = 0; // 0 = current month, -1 = previous, ...
+
+  function getMinViewOffset(startDateStr) {
+    const now = new Date();
+    const nowMonthIndex = now.getFullYear() * 12 + now.getMonth();
+    let minOffset = -60;
+    if (startDateStr) {
+      const sd = new Date(startDateStr);
+      if (!isNaN(sd.getTime())) {
+        const startMonthIndex = sd.getFullYear() * 12 + sd.getMonth();
+        minOffset = startMonthIndex - nowMonthIndex;
+      }
+    }
+    return minOffset;
+  }
+
+  function clampViewOffset(startDateStr) {
+    const minOffset = getMinViewOffset(startDateStr);
+    if (viewMonthOffset > 0) viewMonthOffset = 0;
+    if (viewMonthOffset < minOffset) viewMonthOffset = minOffset;
+    return minOffset;
+  }
+
+  function setupViewIfNeeded(startDateStr) {
+    clampViewOffset(startDateStr);
+  }
+
+  function viewMove(delta) {
+    viewMonthOffset += delta;
     const records = getRecords();
-    const list = document.getElementById('historyList');
-    list.innerHTML = '';
-    const days = [];
-    for (let d = upToDay; d >= 1; d--) {
-      const str = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-      if (records[str]) days.push(str);
+    const startDateStr = getStartDateStr(records);
+    setupViewIfNeeded(startDateStr);
+    renderSyncedViews(startDateStr);
+  }
+
+  function renderSyncedViews(startDateStr) {
+    renderChart(startDateStr);
+    renderMissedCalendar(startDateStr);
+  }
+
+  function renderMissedCalendar(startDateStr) {
+    const records = getRecords();
+    const grid = document.getElementById('calGrid');
+    const title = document.getElementById('calTitle');
+    const calRate = document.getElementById('calRate');
+    const prevBtn = document.getElementById('viewPrev');
+    const nextBtn = document.getElementById('viewNext');
+
+    const now = new Date();
+    const view = new Date(now.getFullYear(), now.getMonth() + viewMonthOffset, 1);
+    const y = view.getFullYear();
+    const m = view.getMonth();
+
+    title.textContent = `${y}年${m + 1}月の未点眼日`;
+
+    const minOffset = clampViewOffset(startDateStr);
+    if (prevBtn) prevBtn.disabled = viewMonthOffset <= minOffset;
+    if (nextBtn) nextBtn.disabled = viewMonthOffset >= 0;
+
+    const monthEnd = getDaysInMonth(y, m);
+    const firstDow = new Date(y, m, 1).getDay(); // 0=Sun
+    const lastDow = new Date(y, m, monthEnd).getDay();
+
+    const hasAnyRecord = Object.keys(records).length > 0;
+
+    // Determine active day range within the month
+    let activeStartDay = 1;
+    if (startDateStr) {
+      const [sy, sm, sd] = startDateStr.split('-').map(n => parseInt(n, 10));
+      if (y === sy && m === (sm - 1)) activeStartDay = sd;
     }
-    if (days.length === 0) {
-      list.innerHTML = '<li class="empty-msg">今月の記録はありません</li>';
-      return;
+    let activeEndDay = monthEnd;
+    const isCurrentMonth = (y === now.getFullYear() && m === now.getMonth());
+    if (isCurrentMonth) activeEndDay = now.getDate();
+    if (!hasAnyRecord) activeEndDay = 0;
+
+    // Month rate for the viewed month (same rules as main rate calc)
+    const upTo = isCurrentMonth ? now.getDate() : null;
+    const monthRate = calcMonthRate(y, m, upTo, startDateStr);
+    if (calRate) {
+      calRate.textContent = monthRate.total > 0
+        ? `点眼率: ${monthRate.rate}%（${monthRate.count}日 / ${monthRate.total}日）`
+        : (hasAnyRecord ? '点眼率: —' : '記録がありません');
     }
-    days.forEach(dateStr => {
-      const li = document.createElement('li');
-      li.className = 'history-item';
-      li.innerHTML = `
-        <span class="history-date">${formatDateJP(dateStr)}</span>
-        <span class="history-badge">✅ 点眼済</span>
-      `;
-      list.appendChild(li);
-    });
+
+    // Build cells: DOW header + padded grid
+    const dows = ['日','月','火','水','木','金','土'];
+    let html = '';
+    for (const d of dows) html += `<div class="dow">${d}</div>`;
+
+    // leading blanks
+    for (let i = 0; i < firstDow; i++) html += `<div class="day out"></div>`;
+
+    for (let day = 1; day <= monthEnd; day++) {
+      const dt = new Date(y, m, day);
+      const dateStr = toDateStr(dt);
+      const isToday = isCurrentMonth && day === now.getDate();
+
+      const isInActiveRange = day >= activeStartDay && day <= activeEndDay;
+      const isDone = !!records[dateStr];
+      const isMissed = isInActiveRange && !isDone;
+
+      const cls = ['day'];
+      if (!isInActiveRange) cls.push('disabled');
+      if (isMissed) cls.push('missed');
+      if (isToday) cls.push('today');
+
+      html += `<div class="${cls.join(' ')}" aria-label="${formatDateJP(dateStr)}${isMissed ? ' 未点眼' : (isDone ? ' 点眼済' : '')}">
+        <span class="day-num">${day}</span>
+        ${isMissed ? '<span class="missed-label">未点眼</span>' : ''}
+      </div>`;
+    }
+
+    // trailing blanks to complete the last week
+    for (let i = lastDow + 1; i <= 6; i++) html += `<div class="day out"></div>`;
+
+    // If viewing month has no active range (e.g., all future or before start), still show grid; missed marks will be none.
+    grid.innerHTML = html;
   }
 
   // ─── Chart ─────────────────────────────────────────────────
   let chartInstance = null;
 
-  function renderChart() {
+  function renderChart(startDateStr) {
     const now = new Date();
+    const records = getRecords();
     const labels = [];
     const data = [];
 
+    const nowMonthIndex = now.getFullYear() * 12 + now.getMonth();
+    const minOffset = clampViewOffset(startDateStr);
+    const end = new Date(now.getFullYear(), now.getMonth() + viewMonthOffset, 1);
+    const endIndex = end.getFullYear() * 12 + end.getMonth();
+
+    // title (range) shared
+    const start = new Date(end.getFullYear(), end.getMonth() - 5, 1);
+    const title = document.getElementById('viewTitle');
+    if (title) title.textContent = `${start.getFullYear()}年${start.getMonth() + 1}月〜${end.getFullYear()}年${end.getMonth() + 1}月`;
+    const prevBtn = document.getElementById('viewPrev');
+    const nextBtn = document.getElementById('viewNext');
+    if (prevBtn) prevBtn.disabled = viewMonthOffset <= minOffset;
+    if (nextBtn) nextBtn.disabled = viewMonthOffset >= 0;
+
     for (let i = 5; i >= 0; i--) {
-      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const d = new Date(end.getFullYear(), end.getMonth() - i, 1);
       const y = d.getFullYear(), m = d.getMonth();
-      const isCurrentMonth = (y === now.getFullYear() && m === now.getMonth());
-      const upTo = isCurrentMonth ? now.getDate() : null;
-      const { rate } = calcMonthRate(y, m, upTo);
+      const monthIndex = y * 12 + m;
+      const isRealCurrentMonth = (monthIndex === nowMonthIndex);
+      const isEndMonth = (monthIndex === endIndex);
+      const upTo = (isRealCurrentMonth && isEndMonth && viewMonthOffset === 0) ? now.getDate() : null;
+      const { rate } = calcMonthRate(y, m, upTo, startDateStr);
       labels.push(`${m + 1}月`);
-      data.push(rate);
+      data.push(Object.keys(records).length === 0 ? null : rate);
     }
 
     const ctx = document.getElementById('rateChart').getContext('2d');
-    if (chartInstance) chartInstance.destroy();
+    if (chartInstance) {
+      chartInstance.data.labels = labels;
+      chartInstance.data.datasets[0].data = data;
+      chartInstance.update('none');
+      return;
+    }
 
     chartInstance = new Chart(ctx, {
       type: 'line',
@@ -722,10 +1103,11 @@
         datasets: [{
           label: '点眼率 (%)',
           data,
-          borderColor: '#2563eb',
-          backgroundColor: 'rgba(37,99,235,0.08)',
+          borderColor: '#1e40af',
+          backgroundColor: 'rgba(30,64,175,0.08)',
           borderWidth: 2.5,
-          pointBackgroundColor: '#2563eb',
+          clip: false,
+          pointBackgroundColor: '#1e40af',
           pointRadius: 5,
           pointHoverRadius: 7,
           tension: 0.3,
@@ -735,6 +1117,14 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: false,
+        layout: { padding: { top: 12 } },
+        transitions: {
+          active: { animation: { duration: 0 } },
+          resize: { animation: { duration: 0 } },
+          show: { animation: { duration: 0 } },
+          hide: { animation: { duration: 0 } }
+        },
         scales: {
           y: {
             min: 0, max: 100,
@@ -756,19 +1146,12 @@
     });
   }
 
-  function toggleGraph() {
-    const content = document.getElementById('graphContent');
-    const btn = document.getElementById('graphToggle');
-    const isOpen = content.classList.toggle('open');
-    btn.classList.toggle('open', isOpen);
-    if (isOpen) renderChart();
-  }
-
-  function toggleHistory() {
-    const content = document.getElementById('historyContent');
-    const btn = document.getElementById('historyToggle');
-    const isOpen = content.classList.toggle('open');
-    btn.classList.toggle('open', isOpen);
+  function toggleInsights() {
+    // deprecated: insights are always visible on Tab 2
+    const records = getRecords();
+    const startDateStr = getStartDateStr(records);
+    setupViewIfNeeded(startDateStr);
+    renderSyncedViews(startDateStr);
   }
 
   // ─── Export CSV ────────────────────────────────────────────
@@ -967,9 +1350,9 @@
       recordToday();
     } else if (/グラフ|チャート|ぐらふ/.test(t)) {
       setVoiceUI('success', `「${t}」→ グラフを表示します`);
-      const content = document.getElementById('graphContent');
-      if (!content.classList.contains('open')) toggleGraph();
-      document.getElementById('graphContent').scrollIntoView({ behavior: 'smooth' });
+      switchTab('tab2');
+      toggleInsights();
+      document.getElementById('insightsContent').scrollIntoView({ behavior: 'smooth' });
     } else if (/削除|さくじょ/.test(t)) {
       setVoiceUI('success', `「${t}」→ 今日の記録を削除します`);
       confirmDeleteToday();
@@ -982,7 +1365,22 @@
   }
 
   // ─── Init ─────────────────────────────────────────────────
+  function switchTab(tabId) {
+    const panels = ['tab1', 'tab2', 'tab3'];
+    panels.forEach((id, idx) => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('active', id === tabId);
+      const btn = document.getElementById(`tabBtn${idx + 1}`);
+      if (btn) {
+        const active = (id === tabId);
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      }
+    });
+  }
+
   setupVoice();
+  switchTab('tab1');
   renderAll();
 
   // Refresh on visibility change (e.g., coming back from background)
