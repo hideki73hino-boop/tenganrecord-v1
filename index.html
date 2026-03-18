@@ -60,7 +60,8 @@
 
     body {
       font-family: 'BIZ UDPGothic', 'BIZ UDPゴシック', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 800;
       background: var(--gray-50);
       color: var(--gray-800);
       min-height: 100vh;
@@ -78,12 +79,12 @@
       box-shadow: 0 2px 8px rgba(30,64,175,0.35);
     }
     .header h1 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       letter-spacing: 0.02em;
     }
     .header-sub {
-      font-size: 12px;
+      font-size: 14px;
       opacity: 0.85;
       margin-top: 2px;
     }
@@ -126,7 +127,8 @@
       font-weight: 900;
     }
     .tab-btn .tab-icon { font-size: 18px; line-height: 1; }
-    .tab-btn .tab-label { font-size: 11px; line-height: 1.1; }
+    .tab-btn .tab-icon { font-size: 20px; line-height: 1; }
+    .tab-btn .tab-label { font-size: 12px; line-height: 1.1; }
     .tab-btn.active { color: var(--primary); }
     .tab-btn.active .tab-icon { transform: translateY(-0.5px); }
 
@@ -157,8 +159,8 @@
       box-shadow: var(--shadow);
     }
     .card-title {
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 900;
       color: var(--gray-600);
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -196,11 +198,11 @@
       display: block;
     }
     .status-text-main {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
     }
     .status-text-sub {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--gray-600);
       margin-top: 2px;
     }
@@ -215,8 +217,8 @@
       padding: 16px;
       border: none;
       border-radius: var(--radius);
-      font-size: 17px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 900;
       cursor: pointer;
       transition: all 0.15s ease;
       -webkit-tap-highlight-color: transparent;
@@ -244,9 +246,14 @@
     }
     .btn-sm {
       padding: 10px 16px;
-      font-size: 14px;
+      font-size: 15px;
       border-radius: 8px;
       width: auto;
+    }
+    /* Keep "点眼を記録する" text unchanged */
+    #recordBtn {
+      font-size: 17px;
+      font-weight: 700;
     }
 
     /* Voice button */
@@ -300,7 +307,7 @@
       border: 1px solid var(--gray-200);
     }
     .rate-label {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--gray-600);
       margin-bottom: 6px;
     }
@@ -311,7 +318,7 @@
       line-height: 1;
     }
     .rate-detail {
-      font-size: 11px;
+      font-size: 13px;
       color: var(--gray-400);
       margin-top: 4px;
     }
@@ -321,7 +328,7 @@
 
     /* Voice log */
     .voice-log {
-      font-size: 13px;
+      font-size: 15px;
       color: var(--gray-600);
       padding: 10px 12px;
       background: var(--gray-50);
@@ -382,8 +389,8 @@
       margin-bottom: 10px;
     }
     .calendar-title {
-      font-size: 14px;
-      font-weight: 800;
+      font-size: 16px;
+      font-weight: 900;
       color: var(--gray-800);
       letter-spacing: 0.02em;
     }
@@ -397,9 +404,11 @@
       background: white;
       color: var(--gray-800);
       border-radius: 10px;
-      padding: 8px 10px;
-      font-size: 14px;
-      font-weight: 800;
+      padding: 12px 14px;
+      font-size: 18px;
+      font-weight: 900;
+      min-width: 48px;
+      min-height: 44px;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
@@ -419,7 +428,7 @@
       min-height: 284px;
     }
     .dow {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--gray-400);
       text-align: center;
       padding: 4px 0;
@@ -433,8 +442,8 @@
       height: 46px;
       display: block;
       padding: 6px 6px 6px 6px;
-      font-size: 14px;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 900;
       color: var(--gray-800);
     }
     .day.out {
@@ -460,7 +469,7 @@
       position: absolute;
       left: 8px;
       top: 7px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 900;
       line-height: 1;
       color: var(--gray-800);
@@ -470,7 +479,7 @@
       left: 6px;
       right: 6px;
       bottom: 6px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 900;
       text-align: center;
       color: #b91c1c;
